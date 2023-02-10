@@ -11,11 +11,11 @@ const App = () => {
     <BrowserRouter>
        <main style={{minHeight:"93vh"}}>
       <Routes>
-        <Route exact path='/' element={LandingPage}></Route>
-        <Route exact path='/dashboardNGO' element={DashboardNGO}></Route>
-        <Route exact path='/dashboardPhil' element={DashboardPhil}></Route>
-        <Route exact path='/createProfileNGO' element={CreateProfileNGO}></Route>
-        <Route exact path='/createProfilePhil' element={CreateProfilePhil}></Route>      
+        <Route exact path='/' element={<LandingPage/>}></Route>
+        <Route exact path='/dashboardNGO' element={<DashboardNGO/>}></Route>
+        <Route exact path='/dashboardPhil' element={<DashboardPhil/>}></Route>
+        <Route exact path='/createProfileNGO' element={<CreateProfileNGO/>}></Route>
+        <Route exact path='/createProfilePhil' element={<CreateProfilePhil/>}></Route>      
       </Routes>
       </main>
     </BrowserRouter>  

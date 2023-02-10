@@ -1,0 +1,11 @@
+.form {
+  align-self: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+.formbg {
+  background-color: azure;
+}
