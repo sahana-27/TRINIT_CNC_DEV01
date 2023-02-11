@@ -8,11 +8,11 @@
 }
 
 .formbg {
-  background: linear-gradient(to right, #65106e, #ed05ed);
+  background: linear-gradient(to right, #05c3e5, #0470a7);
 }
 
 body {
-  background-image: linear-gradient(to right, #65106e, #ed05ed);
+  background-image: linear-gradient(to right, #05c3e5, #0470a7);
   height: 100vh;
 }
 .button1{
