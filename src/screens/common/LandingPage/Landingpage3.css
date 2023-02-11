@@ -1,0 +1,71 @@
+.owl-carousel {
+  background: linear-gradient(to right, #65106e, #ed05ed);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.row1 {
+  padding-bottom: 40px;
+}
+
+.welcome {
+  font-size: 40px;
+  color: white;
+  text-align: center;
+}
+
+.row2 {
+  padding-bottom: 60px;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+}
+
+.main-button {
+  padding-bottom: 20px;
+}
+
+.main-button{
+  
+  color: #5A3F37;
+  border-radius: 30px;
+  font-size: 20px;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.second-button {
+  background-color: transparent;
+  border-radius: 30px;
+  font-size: 20px;
+  padding: 10px 30px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.button {
+  background-color: white;
+  color: #5A3F37;
+  border: 2px solid #5A3F37;
+  border-radius: 30px;
+  font-size: 20px;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px;
+}
+
+.image {
+  display: flex;
+  align-items: flex-start;
+}
+
+.image img {
+  width: 100%;
+}
