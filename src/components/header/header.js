@@ -34,12 +34,12 @@ const Header = () => {
                 <Navbar.Text className="loggedIn">
                     Signed in as:  
                     <a href="#login" variant="primary">
-                        XYZ
+                        {userInfo.name}
                     </a>
                 </Navbar.Text>
             </Navbar.Collapse>
                 <Button variant="light" className="headerButton"onClick={()=>{
-                    //localStorage.removeItem("userInfo");
+                    localStorage.removeItem("userInfo");
                     navigate('/');
                 }}>
                     Log Out
