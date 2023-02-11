@@ -12,10 +12,10 @@ mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb
 }).catch((err) => {
   console.log("Error in connection");
 });
-
 const ngoSchema = require('./schema/ngoschem');
 const philSchema = require('./schema/philschema');
 const postSchema = require('./schema/postSchema');
+const toFind = require("./recommend")
 var cors = require('cors');
 const corsOrigin ={
     origin:'http://localhost:3000', //or whatever port your frontend is using
@@ -86,6 +86,11 @@ app.post('/ngos/login', async function (req,res) {
         res.status(400);
         throw new Error("Invalid email or password")
     }
+});
+//farzan added this, pls add page 
+app.get('/recommend' , async (req, res) => {
+  const recommended = await toFind();
+  res.send(recommended);
 });
 
 //all
