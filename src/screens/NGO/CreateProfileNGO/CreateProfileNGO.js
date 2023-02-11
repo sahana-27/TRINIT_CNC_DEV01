@@ -7,11 +7,10 @@ import './CreateProfileNGO.css';
 const CreateProfileNGO = () =>{
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
-    const [password,setPassword] = useState('');
-    const [type,setType] = useState('');
-    const [location,setLocation] = useState('');
+    const [NGOType,setNGOType] = useState('');
     const [prevWork,setPrevWork] = useState('');
-    const [mission,setMission] = useState('');
+    const [endGoal,setEndGoal] = useState('');
+    const [howGoal,setHowGoal] = useState('');
     const [impact,setImpact] = useState('');
     const [funding,setFunding] = useState('');
     const [success,setSuccess] = useState(false);
@@ -24,29 +23,27 @@ const CreateProfileNGO = () =>{
                         "Content-type":"application/json"
                     }
                 };
-                const{data} = await axios.post(
-                    'http://localhost:8180/ngos/create/',
+                const{data} = await axios.put(
+                    `/api/NGO/createProfile/${email}`,
                     {
                         name,
                         email,
-                        password,
-                        type,
-                        location,
+                        NGOType,
                         prevWork,
-                        mission,
+                        endGoal,
+                        howGoal,
                         impact,
                         funding
                     },config
                 );
                 if(data)setSuccess(true);
-                console.log(data);
             }catch(error){
                 console.log(error.response.data);
             }
     }
 
     if(success){
-        return <Navigate to='/DashboardNGO'/>
+        return <Navigate to='/NGODashboard'/>
     }
 
     return(
@@ -73,19 +70,10 @@ const CreateProfileNGO = () =>{
                         onChange={(e) => setEmail(e.target.value)}
                 />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control 
-                        type="password" 
-                        placeholder="Password" 
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Which type of NGO are you?</Form.Label>
                     <Form.Select id="NGOtype" 
-                        onSelect={(e)=>{setType(e)}}>
+                        onSelect={(e)=>{setNGOType(e)}}>
                         <option>Environmental</option>
                         <option>Human Rights</option>
                         <option>Disaster Relief</option>
@@ -93,15 +81,6 @@ const CreateProfileNGO = () =>{
                         <option>Education</option>
                         <option>Indigenous</option>
                     </Form.Select>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formText">
-                    <Form.Label>Location</Form.Label>
-                    <Form.Control 
-                        type="text" 
-                        placeholder="Location" 
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                    />
                 </Form.Group>
                 <InputGroup>
                     <InputGroup.Text>Tell us something about your work so far: </InputGroup.Text>
@@ -112,14 +91,21 @@ const CreateProfileNGO = () =>{
                 </InputGroup>
                 <br/>
                 <InputGroup>
-                    <InputGroup.Text>What is your mission?</InputGroup.Text>
-                    <Form.Control as="textarea" aria-label="mission"
-                        value={mission}
-                        onChange={(e) => setMission(e.target.value)} />
+                    <InputGroup.Text>What is your end goal?</InputGroup.Text>
+                    <Form.Control as="textarea" aria-label="endgoal"
+                        value={endGoal}
+                        onChange={(e) => setEndGoal(e.target.value)} />
                 </InputGroup>
                 <br/>
                 <InputGroup>
-                    <InputGroup.Text>What is your impact on society?</InputGroup.Text>
+                    <InputGroup.Text>How do you plan to achieve this goal?</InputGroup.Text>
+                    <Form.Control as="textarea" aria-label="howgoal"
+                        value={howGoal}
+                        onChange={(e) => setHowGoal(e.target.value)} />
+                </InputGroup>
+                <br/>
+                <InputGroup>
+                    <InputGroup.Text>What has been your impact on the environment and society?</InputGroup.Text>
                     <Form.Control as="textarea" aria-label="impact"
                         value={impact}
                         onChange={(e) => setImpact(e.target.value)} />
