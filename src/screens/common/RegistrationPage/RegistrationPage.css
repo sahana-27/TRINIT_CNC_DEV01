@@ -1,0 +1,17 @@
+.bg {
+    background: linear-gradient(to right, #65106e, #ed05ed);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    background-color: white;
+    font-size: 20px;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px;
+}
