@@ -6,6 +6,9 @@ const session = require('express-session');
 mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb.net/test');
 const ngoSchema = require('./schema/ngoschem');
 const philSchema = require('./schema/philschema');
+
+const toFind = require("./recommend")
+
 app.use(session({
   resave: false,
   saveUninitialized: true,
@@ -13,6 +16,12 @@ app.use(session({
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+
+app.get('/recommend' , async (req, res) => {
+  const recommended = await toFind();
+  res.send(recommended);
+});
 
 //all
 app.get('/ngos', function (req, res) {
