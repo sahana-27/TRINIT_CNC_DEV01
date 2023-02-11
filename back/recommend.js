@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
-const connectDB = require("./config/db.js");
 const schema = require('./schema/ngoschem');
-
-// connecting to database
-connectDB();
-
+const pschema = require('./schema/philschema');
 
 function recommend(entityName, result) {
 
@@ -22,8 +18,9 @@ function recommend(entityName, result) {
 
 const toFind = async () => {
     let result = [];
+    let free = [];
     const data = await schema.NGO.find({});
-
+  const pdata = await pschema.Philanthropist.find({});
     data.forEach((i) => {
         temp = {};
         temp.name = i.name;
@@ -32,16 +29,17 @@ const toFind = async () => {
         result.push(temp);
     })
 
-    const recommended = await recommend('idk', result);
+    pdata.forEach((i) => {
+        i.NGOPref.forEach(async (j) => {
+          console.log(j);
+          const temp = await recommend(j,result);
+          free.push(temp);
+        })
+    })
+
+    const recommended = free;
     return recommended;
     
 }
 
 module.exports = toFind;
-
-
-
-
-  
-  
-  
