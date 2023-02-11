@@ -12,6 +12,7 @@ mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb
 }).catch((err) => {
   console.log("Error in connection");
 });
+
 const ngoSchema = require('./schema/ngoschem');
 const philSchema = require('./schema/philschema');
 const postSchema = require('./schema/postSchema');

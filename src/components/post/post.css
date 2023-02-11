@@ -2,10 +2,11 @@
   margin-top: 20px;
 }
 
-.donor {
+.Donor {
   background-color: "green";
 }
 
-.recipient {
+.Recipient {
   background-color: "blue";
+  color: black;
 }

@@ -4,14 +4,16 @@ import {Container,Col,Row,Card,Button,Form,InputGroup} from 'react-bootstrap';
 import avatar from './avatar.png';
 import dcontent from './postpic.jpg';
 import Header from '../../../components/header/header.js';
+import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 
 const DashboardNGO = () =>{
-    const name="XYZ";
+    const tempname="XYZ";
     const scontent="This is post 1";
     const tag="donor";
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    const username= userInfo.name;
+    const name= userInfo.name;
+    console.log(name);
     const[postText,setPostText] = useState('');
     const[fundTag,setFundTag] = useState('');
     const[success,setSuccess] = useState(false);
@@ -30,7 +32,7 @@ const DashboardNGO = () =>{
                 const{data} = await axios.post(
                     'http://localhost:8180/posts/createPost',
                     {
-                        username,
+                        name,
                         postText,
                         fundTag
                     },config
@@ -38,9 +40,11 @@ const DashboardNGO = () =>{
                 if(data)setSuccess(true);
                 console.log(data);
                 setPostText('');setFundTag('');
+                return <Navigate to='/dashboard'/>
             }catch(error){
                 console.log(error.response.data);
             }
+           
     }
 
     const [posts,setPosts] = useState([]);

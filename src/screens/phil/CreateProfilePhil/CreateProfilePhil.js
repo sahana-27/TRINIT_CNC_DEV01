@@ -36,13 +36,14 @@ const CreateProfilePhil = () =>{
                 );
                 if(data)setSuccess(true);
                 console.log(data);
+                localStorage.setItem("userInfo",JSON.stringify(data));
             }catch(error){
                 console.log(error.response.data);
             }
     }
 
     if(success){
-        return <Navigate to='/DashboardPhil'/>
+        return <Navigate to='/dashboard'/>
     }
 
     return(

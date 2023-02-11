@@ -16,6 +16,10 @@ const CreateProfileNGO = () =>{
     const [funding,setFunding] = useState('');
     const [success,setSuccess] = useState(false);
     
+    const handleSelect=(e)=>{
+        setType(e.target.value);
+    }
+
     const submitHandler = async(e) =>{
         e.preventDefault();
             try{
@@ -46,7 +50,7 @@ const CreateProfileNGO = () =>{
     }
 
     if(success){
-        return <Navigate to='/DashboardNGO'/>
+        return <Navigate to='/dashboard'/>
     }
 
     return(
@@ -84,8 +88,7 @@ const CreateProfileNGO = () =>{
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Which type of NGO are you?</Form.Label>
-                    <Form.Select id="NGOtype" 
-                        onSelect={(e)=>{setType(e)}}>
+                    <Form.Select onChange={handleSelect}>
                         <option>Environmental</option>
                         <option>Human Rights</option>
                         <option>Disaster Relief</option>
