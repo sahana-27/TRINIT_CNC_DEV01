@@ -3,6 +3,7 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 const session = require('express-session');
+//mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@trinit.wyslvwy.mongodb.net/test');
 mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb.net/?retryWrites=true&w=majority'/*,{
   /useNewUrlParser: true,
   useUnifiedTopology: true
@@ -21,12 +22,6 @@ const corsOrigin ={
     optionSuccessStatus:200
 }
 app.use(cors(corsOrigin));
-mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb.net/test');
-const ngoSchema = require('./schema/ngoschem');
-const philSchema = require('./schema/philschema');
-
-const toFind = require("./recommend")
-
 app.use(session({
   resave: false,
   saveUninitialized: true,
@@ -90,10 +85,6 @@ app.post('/ngos/login', async function (req,res) {
         res.status(400);
         throw new Error("Invalid email or password")
     }
-
-app.get('/recommend' , async (req, res) => {
-  const recommended = await toFind();
-  res.send(recommended);
 });
 
 //all
