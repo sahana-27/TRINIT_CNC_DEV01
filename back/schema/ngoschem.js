@@ -4,8 +4,6 @@ var ngoSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: String,
-    password: String,
-    location: String,
     type : String,
     location: String,
     prevWork: String,
