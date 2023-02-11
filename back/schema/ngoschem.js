@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var ngoSchema = new mongoose.Schema({
     name: String,
+    password: String,
     location: String,
     type : String,
     mission: String,

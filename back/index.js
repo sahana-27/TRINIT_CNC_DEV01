@@ -3,7 +3,7 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 const session = require('express-session');
-mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@trinit.wyslvwy.mongodb.net/test');
+mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb.net/test');
 const ngoSchema = require('./schema/ngoschem');
 const philSchema = require('./schema/philschema');
 app.use(session({
@@ -119,8 +119,8 @@ passport.deserializeUser(function(obj, cb) {
 });
 
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const GOOGLE_CLIENT_ID = 'encrypt';
-const GOOGLE_CLIENT_SECRET = 'encrypt';
+const GOOGLE_CLIENT_ID = '697194402405-cfophtsf3i28auje698ishuur0sbs3vp.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
