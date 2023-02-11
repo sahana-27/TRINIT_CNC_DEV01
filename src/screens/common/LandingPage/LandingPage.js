@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container,Row,Col,Button} from 'react-bootstrap'
-import './LandingPage.css'
+import './LandingPage2.css'
 import bg from './bg3.png';
 
 const LandingPage = () =>{

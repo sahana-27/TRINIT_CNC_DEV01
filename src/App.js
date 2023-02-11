@@ -9,7 +9,7 @@ import {BrowserRouter,Routes,Route} from "react-router-dom";
 const App = () => {
   return (
     <BrowserRouter>
-       <main style={{minHeight:"93vh"}}>
+       <main style={{minHeight:"100vh"}}>
       <Routes>
         <Route exact path='/' element={<LandingPage/>}></Route>
         <Route exact path='/dashboardNGO' element={<DashboardNGO/>}></Route>
