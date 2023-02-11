@@ -3,8 +3,6 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 const session = require('express-session');
-<<<<<<< HEAD
-//mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@trinit.wyslvwy.mongodb.net/test');
 mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb.net/?retryWrites=true&w=majority'/*,{
   /useNewUrlParser: true,
   useUnifiedTopology: true
@@ -23,14 +21,12 @@ const corsOrigin ={
     optionSuccessStatus:200
 }
 app.use(cors(corsOrigin));
-=======
 mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb.net/test');
 const ngoSchema = require('./schema/ngoschem');
 const philSchema = require('./schema/philschema');
 
 const toFind = require("./recommend")
 
->>>>>>> 16f0cb8d4274b91c932a6797cf6c4c9f1bf639d2
 app.use(session({
   resave: false,
   saveUninitialized: true,
@@ -39,7 +35,6 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-<<<<<<< HEAD
 app.post('/ngos/create/',async function(req,res) {
     const{name,email,password,type,location,prevWork,mission,impact,funding} = req.body;
     const ngoExists = await ngoSchema.NGO.findOne({email});
@@ -95,12 +90,10 @@ app.post('/ngos/login', async function (req,res) {
         res.status(400);
         throw new Error("Invalid email or password")
     }
-=======
 
 app.get('/recommend' , async (req, res) => {
   const recommended = await toFind();
   res.send(recommended);
->>>>>>> 16f0cb8d4274b91c932a6797cf6c4c9f1bf639d2
 });
 
 //all
