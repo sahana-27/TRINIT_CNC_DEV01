@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@trinit.wyslvwy.mongodb.net/test');
+mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb.net/test');
 const schema = require('../schema/ngoschem');
 
 var ngos = [
     {
         name: 'Greenpeace',
+        password: '1234',
         location: 'New York',
         type: 'idk',
         mission: 'To protect and conserve the environment',
@@ -14,6 +15,7 @@ var ngos = [
     },
     {
         name: 'Doctors Without Borders',
+        password: '5678',
         location: 'Paris',
         type: 'lolz',
         mission: 'To provide medical assistance to people in need',
