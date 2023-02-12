@@ -3,6 +3,9 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 const session = require('express-session');
+const http = require("http");
+const { Server } = require("socket.io");
+
 //mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@trinit.wyslvwy.mongodb.net/test');
 mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb.net/?retryWrites=true&w=majority'/*,{
   /useNewUrlParser: true,
@@ -16,6 +19,7 @@ mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb
 const ngoSchema = require('./schema/ngoschem');
 const philSchema = require('./schema/philschema');
 const postSchema = require('./schema/postSchema');
+const toFind = require("./recommend")
 var cors = require('cors');
 const corsOrigin ={
     origin:'http://localhost:3000', //or whatever port your frontend is using
@@ -23,6 +27,37 @@ const corsOrigin ={
     optionSuccessStatus:200
 }
 app.use(cors(corsOrigin));
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    //origin: "http://localhost:3000",
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
+
+  // socket.on(<events>,<data to be passed>)
+
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
+
+  socket.on("send_message", (data) => {
+    // sending the messageData to the room 
+    socket.to(data.room).emit("receive_message", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log(`User with ID: ${socket.id} disconnected`);
+  });
+});
+
+
 app.use(session({
   resave: false,
   saveUninitialized: true,
@@ -88,11 +123,67 @@ app.post('/ngos/login', async function (req,res) {
     }
 });
 
+// //farzan added this, pls add page 
+// app.get('/recommend/' , async (req, res) => {
+//   const recommended = await toFind();
+//   res.send(recommended);
+// });
+
+//farzan added this, pls add page 
+app.get('/recommend/:id' , async (req, res) => {
+  variable = req.params.id;
+  const toFind = async (variable) => {
+      let result = [];
+      let free = [];
+      const data = await ngoSchema.NGO.find({});
+    const pdata = await philSchema.Philanthropist.find({});
+      data.forEach((i) => {
+          temp = {};
+          temp.name = i.name;
+          temp.type = i.type;
+          result.push(temp);
+      })
+  
+      pdata.forEach((i) => {
+        if(variable == i._id){
+          console.log(variable);
+          i.NGOPref.forEach(async (j) => {
+            const inputEntity = result.find(e => e.type === j);
+                if (!inputEntity) {
+            return "Entity not found";
+        }
+    
+      const recommendedEntities = result.filter(
+        e => e.category === inputEntity.category && e.type === j
+      );
+    
+      const temp =  recommendedEntities.map(e => e.name);
+            free.push(temp);
+          })
+        }
+      })
+      const recommended = free;
+      console.log(recommended);
+      const final = [...new Set(recommended.flat())];
+      return final;
+    }
+      const recommender = await toFind(variable);
+      res.send(recommender);
+});
+
 //all
 app.get('/ngos', function (req, res) {
     ngoSchema.NGO.find({}, function (err, ngos) {
         if (err) return console.error(err);
         res.send(ngos);
+    });
+});
+
+//get ngo by id
+app.get('/ngos/:id', function (req, res) {
+    ngoSchema.NGO.find({ _id: req.params.id }, function (err, ngo) {
+        if (err) return console.error(err);
+        res.send(ngo);
     });
 });
 

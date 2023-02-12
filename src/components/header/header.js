@@ -20,15 +20,7 @@ const Header = () => {
                 <Navbar.Brand href="#home" color="#fffbf0">CNC</Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse>
-                <Form className="d-flex">
-                    <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    aria-label="Search"
-                    />
-                    <Button variant="outline-success">Search</Button>
-                </Form>
+                    <Button variant="success" href="/search">Search and Filter NGOs</Button>
             </Navbar.Collapse>
             <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text className="loggedIn">

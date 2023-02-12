@@ -44,6 +44,7 @@ const CreateProfileNGO = () =>{
                 );
                 if(data)setSuccess(true);
                 console.log(data);
+                localStorage.setItem("userInfo",JSON.stringify(data));
             }catch(error){
                 console.log(error.response.data);
             }
@@ -89,12 +90,12 @@ const CreateProfileNGO = () =>{
                 <Form.Group className="mb-3">
                     <Form.Label>Which type of NGO are you?</Form.Label>
                     <Form.Select onChange={handleSelect}>
-                        <option>Environmental</option>
-                        <option>Human Rights</option>
-                        <option>Disaster Relief</option>
-                        <option>Development</option>
-                        <option>Education</option>
-                        <option>Indigenous</option>
+                        <option value="Environmental">Environmental</option>
+                        <option value="Human Rights">Human Rights</option>
+                        <option value="Disaster Relief">Disaster Relief</option>
+                        <option value="Development">Development</option>
+                        <option value="Education">Education</option>
+                        <option value="Indigenous">Indigenous</option>
                     </Form.Select>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formText">
@@ -122,7 +123,7 @@ const CreateProfileNGO = () =>{
                 </InputGroup>
                 <br/>
                 <InputGroup>
-                    <InputGroup.Text>What is your impact on society?</InputGroup.Text>
+                    <InputGroup.Text>What is your impact area?</InputGroup.Text>
                     <Form.Control as="textarea" aria-label="impact"
                         value={impact}
                         onChange={(e) => setImpact(e.target.value)} />

@@ -2,6 +2,7 @@ import './App.css';
 import LandingPage from './screens/common/LandingPage/LandingPage';
 import LoginPage from './screens/common/LoginPage/LoginPage';
 import Dashboard from './screens/common/Dashboard/Dashboard';
+import SearchNGOs from './screens/common/SearchNGOs/SearchNGOs';
 import RegistrationPage from './screens/common/RegistrationPage/RegistrationPage';
 import CreateProfileNGO from './screens/NGO/CreateProfileNGO/CreateProfileNGO';
 import CreateProfilePhil from './screens/phil/CreateProfilePhil/CreateProfilePhil';
@@ -17,7 +18,8 @@ const App = () => {
         <Route exact path='/dashboard' element={<Dashboard/>}></Route>
         <Route exact path='/register' element={<RegistrationPage/>}></Route>
         <Route exact path='/createProfileNGO' element={<CreateProfileNGO/>}></Route>
-        <Route exact path='/createProfilePhil' element={<CreateProfilePhil/>}></Route>      
+        <Route exact path='/createProfilePhil' element={<CreateProfilePhil/>}></Route>    
+        <Route exact path='/search' element={<SearchNGOs/>}></Route>     
       </Routes>
       </main>
     </BrowserRouter>  

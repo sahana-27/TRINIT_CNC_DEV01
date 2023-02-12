@@ -1,25 +1,61 @@
 import {React,useState,useEffect} from 'react';
 import Post from '../../../components/post/post.js';
-import {Container,Col,Row,Card,Button,Form,InputGroup} from 'react-bootstrap';
+import {Container,Col,Row,Card,Button,Form,InputGroup,ListGroup} from 'react-bootstrap';
 import avatar from './avatar.png';
 import dcontent from './postpic.jpg';
 import Header from '../../../components/header/header.js';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import io from "socket.io-client";
+import Chat from "./Chat";
+import "./Dashboard.css";
+
+const socket = io.connect();
+if(socket.connected) console.log("Socket connected");
+else console.log("Socket is Not connected");
 
 const DashboardNGO = () =>{
     const tempname="XYZ";
     const scontent="This is post 1";
     const tag="donor";
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const userType = JSON.parse(localStorage.getItem("userType"));
     const name= userInfo.name;
     console.log(name);
     const[postText,setPostText] = useState('');
     const[fundTag,setFundTag] = useState('');
     const[success,setSuccess] = useState(false);
+    const[reco,setReco] = useState(false);
+    const[text,setText] = useState('SHOW RECOMMENDED NGOs');
+    const[NGOs,setNGOs] = useState([]);
+
+    const [username, setUsername] = useState("");
+    const [room, setRoom] = useState("");
+    const [showChat, setShowChat] = useState(false);
+
+    const joinRoom = () => {
+    // Username and room should not be null
+    if (username !== "" && room !== "") {
+      socket.emit("join_room", room);
+      setShowChat(true);
+     }
+    };
 
     const handleSelect=(e)=>{
         setFundTag(e.target.value);
+    }
+    const handleClick=()=>{
+        if(userType==='Philanthropist'){
+            if(reco===false){
+                setReco(true);
+                setText("HIDE RECOMMENDED NGOs");
+            }
+            else{
+                setReco(false);
+                setText("SHOW RECOMMENDED NGOs");
+            }
+        }
+        
     }
     const submitHandler = async(e) =>{
         e.preventDefault();
@@ -57,6 +93,16 @@ const DashboardNGO = () =>{
         fetchPosts();
     },[]);
 
+    useEffect(()=>{
+        const fetchNGOs = async() =>{
+            const res = await axios.get(`http://localhost:8180/recommend/${userInfo._id}`);
+            console.log(res.data);
+            setNGOs(res.data);
+        };
+        fetchNGOs();
+    },[]);
+
+
     return(
          <div className="dashboardNGO">
             <Header/>
@@ -70,7 +116,26 @@ const DashboardNGO = () =>{
                                     <Card.Text>
                                         India based NGO focused on promoting sustainable development
                                     </Card.Text>
-                                    <Button align="center" variant="primary">View your chats</Button>
+                                    {!showChat ? (
+                                        <div className="communityChat">
+                                            <Card.Title>Join Community</Card.Title>
+                                            <input
+                                                type="text"
+                                                placeholder="Username"
+                                                onChange={(event) => { setUsername(event.target.value); }}
+                                            />
+                                            <input
+                                                type="text"
+                                                placeholder="Community Name"
+                                                onChange={(event) => { setRoom(event.target.value); }}
+                                            />
+                                            <Button align="center" variant="primary" onClick={joinRoom}>Join</Button>
+                                        </div>
+                                    ) : ( //Show chat only if true 
+                                    // Passing socket as a prop
+                                    <Chat socket={socket} username={username} room={room} />
+                                    )}
+                                    
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -83,6 +148,7 @@ const DashboardNGO = () =>{
                             </ul>
                         </Col>
                         <Col xs={3}>
+                            <Row>
                             <Card style={{ width: '15rem', margin: '20px'}}>
                                 <Card.Header>
                                     <Card.Title align="center">CREATE POST</Card.Title>
@@ -107,6 +173,19 @@ const DashboardNGO = () =>{
                                 </Form>
                                 </Card.Body>
                             </Card>
+                            </Row>
+                            <Row>
+                                {userType==='Philanthropist' && <Button style={{ width: '15rem',margin: '20x',aligntext:'center'}} onClick={handleClick}>{text}</Button>}
+                                {reco &&
+                                    <Card style={{ width: '15rem',margin: '20x',aligntext:'center'}}>
+                                        <ListGroup variant="flush">
+                                            {NGOs.map((NGO) => (
+                                                <ListGroup.Item>{NGO}</ListGroup.Item>
+                                            ))}
+                                        </ListGroup>
+                                    </Card>                                   
+                                }
+                            </Row>
                         </Col>     
                     </Row>       
             </Container>
