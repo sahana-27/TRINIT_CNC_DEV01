@@ -15,7 +15,6 @@ mongoose.connect('mongodb+srv://nazraf:nandanaisaloser1@cluster0.6uipfrv.mongodb
 }).catch((err) => {
   console.log("Error in connection");
 });
-
 const ngoSchema = require('./schema/ngoschem');
 const philSchema = require('./schema/philschema');
 const postSchema = require('./schema/postSchema');
@@ -121,6 +120,49 @@ app.post('/ngos/login', async function (req,res) {
         res.status(400);
         throw new Error("Invalid email or password")
     }
+});
+//farzan added this, pls add page 
+app.get('/recommend' , async (req, res) => {
+  variable = 'phil3';
+  const toFind = async (variable) => {
+
+      let result = [];
+      let free = [];
+      const data = await ngoSchema.NGO.find({});
+    const pdata = await philSchema.Philanthropist.find({});
+      data.forEach((i) => {
+          temp = {};
+          temp.name = i.name;
+          temp.type = i.type;
+  
+          result.push(temp);
+      })
+  
+      pdata.forEach((i) => {
+        
+        if(variable == i.name){
+          console.log(variable);
+          i.NGOPref.forEach(async (j) => {
+            const inputEntity = result.find(e => e.type === j);
+                if (!inputEntity) {
+            return "Entity not found";
+        }
+    
+      const recommendedEntities = result.filter(
+        e => e.category === inputEntity.category && e.type === j
+      );
+    
+      const temp =  recommendedEntities.map(e => e.name);
+            free.push(temp);
+          })
+        }
+      })
+      const recommended = free;
+      console.log(recommended);
+    return recommended;
+    }
+      const recommender = await toFind(variable);
+      res.send(recommender);
 });
 
 // //farzan added this, pls add page 
